@@ -11,23 +11,8 @@ import {
 import styles from '../components/Style'
 
 const RegisterPage = ({ navigation }) => {
-  const [UserAns, setUserAns] = useState('')
-  const [Result, setResult] = useState('')
-  const [Attempts, setAttempts] = useState(0)
-  const [Correct, setCorrect] = useState(0)
-
-  const compareAns = () => {
-    let Ans = Num1 + Num2
-    let input = UserAns
-    if (parseInt(input) == Ans) {
-      setResult('Congratulations! Correct!')
-      setAttempts(Attempts + 1)
-      setCorrect(Correct + 1)
-    } else {
-      setResult('Incorrect, correct answer is: ' + Ans)
-      setAttempts(Attempts + 1)
-    }
-  }
+  const [Username, setUsername] = useState('')
+  const [Password, setPassword] = useState('')
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -46,7 +31,7 @@ const RegisterPage = ({ navigation }) => {
                 source={require('../assets/mieTall.png')}
                 style={{ width: 35, height: 70, marginRight: 10 }}
               />
-              <Text style={styles.h1}>{'REGISTER'}</Text>
+              <Text style={styles.h1}> {'REGISTER'} </Text>
             </View>
             <TextInput
               style={styles.input}
@@ -72,10 +57,12 @@ const RegisterPage = ({ navigation }) => {
                 style={styles.cancelButton}
                 onPress={() => navigation.goBack()}
               >
-                <Text style={[styles.buttonText, styles.cancelButtonText]}>{'CANCEL'}</Text>
+                <Text style={[styles.buttonText, styles.cancelButtonText]}>
+                  {'CANCEL'}
+                </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={compareAns}>
-                <Text style={styles.buttonText}>{'SUBMIT'}</Text>
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}> {'SUBMIT'} </Text>
               </TouchableOpacity>
             </View>
           </View>

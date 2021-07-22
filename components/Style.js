@@ -6,7 +6,7 @@ export default StyleSheet.create({
     underline: { textDecorationLine: 'underline' },
     rootContainer: {
         flex: 1,
-        backgroundColor: '#212121',
+        backgroundColor: '#fff',
         padding: 20,
     },
     mainContainer: {
@@ -57,27 +57,28 @@ export default StyleSheet.create({
         margin: 10,
         width: '100%',
         alignSelf: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#000',
         borderRadius: 25,
         borderWidth: 3,
-        borderColor: '#fff',
+        borderColor: '#000',
     },
     button: {
         paddingTop: 5,
         padding: 8,
         alignSelf: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#000',
         borderRadius: 20,
         borderRadius: 25,
         borderWidth: 3,
-        borderColor: '#fff',
+        borderColor: '#000',
     },
     buttonText: {
         fontFamily: 'RobotoMono',
         textAlign: 'center',
         fontSize: 15,
         padding: 5,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        color: '#fff'
     },
     cancelButtonContainer: {},
     cancelButton: {

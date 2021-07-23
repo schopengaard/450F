@@ -10,6 +10,11 @@ import {
 } from 'react-native'
 import styles from '../components/Style'
 
+//test
+const verfication = (navigation) =>{
+	navigation.navigate('HomePage');
+}
+
 const RegisterPage = ({ navigation }) => {
   const [Username, setUsername] = useState('')
   const [Password, setPassword] = useState('')
@@ -61,7 +66,7 @@ const RegisterPage = ({ navigation }) => {
                   {'CANCEL'}
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={()=>verfication(navigation)}>
                 <Text style={styles.buttonText}> {'SUBMIT'} </Text>
               </TouchableOpacity>
             </View>

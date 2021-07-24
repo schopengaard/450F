@@ -3,13 +3,14 @@ import 'react-native-gesture-handler'
 import * as React from 'react'
 import { Button, View, Text } from 'react-native'
 import { useFonts } from 'expo-font'
+import * as SplashScreen from 'expo-splash-screen'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import MainPage from './pages/MainPage.js'
-import RegisterPage from './pages/RegisterPage.js'
 import LoginPage from './pages/LoginPage.js'
+import RegisterPage from './pages/RegisterPage.js'
+import HomePage from './pages/HomePage.js'
 import styles from './components/Style.js'
 
 const Stack = createStackNavigator()
@@ -24,12 +25,12 @@ export default function App() {
   }
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="MainPage">
+      <Stack.Navigator initialRouteName="LoginPage">
         <Stack.Screen
-          name="MainPage"
-          component={MainPage}
+          name="LoginPage"
+          component={LoginPage}
           options={{
-            title: 'Main Page',
+            title: 'Login Page',
             headerStyle: {
               backgroundColor: '#00000000',
             },
@@ -53,10 +54,10 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="LoginPage"
-          component={LoginPage}
+          name="HomePage"
+          component={HomePage}
           options={{
-            title: 'Login Page',
+            title: 'Home Page',
             headerStyle: {
               backgroundColor: '#f4511e',
             },

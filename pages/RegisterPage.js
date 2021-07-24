@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import {
   Animated,
   Image,
@@ -10,7 +10,9 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Platform
 } from 'react-native'
+import logoTall from '../assets/logo/logoTall.png'
 import styles from '../components/Style'
 
 //test
@@ -19,9 +21,34 @@ const submit = (navigation) => {
 }
 
 const RegisterPage = ({ navigation }) => {
+  const [Fullname, setFullname] = useState('')
   const [Username, setUsername] = useState('')
   const [Password, setPassword] = useState('')
   const fadeAnim = useRef(new Animated.Value(1)).current
+
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false)
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true)
+		keyboardEvent('up')
+      },
+    )
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false)
+		keyboardEvent('down')
+      },
+    )
+
+    return () => {
+      keyboardDidHideListener.remove()
+      keyboardDidShowListener.remove()
+    }
+  }, [])
 
   const keyboardEvent = (e) => {
     if (e == 'up') {
@@ -33,7 +60,7 @@ const RegisterPage = ({ navigation }) => {
     } else {
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 1000,
+        duration: 600,
         useNativeDriver: true,
       }).start()
     }
@@ -41,7 +68,7 @@ const RegisterPage = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior='height'
       style={styles.changedContainer}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -49,7 +76,7 @@ const RegisterPage = ({ navigation }) => {
           <Animated.View style={[styles.topContainer, { opacity: fadeAnim }]}>
             <View style={styles.logoContainer}>
               <Image
-                source={require('../assets/mieTall.png')}
+                source={logoTall}
                 style={styles.logo}
               />
               <Text style={styles.title}>{'450F'}</Text>
@@ -65,11 +92,19 @@ const RegisterPage = ({ navigation }) => {
             <Text style={styles.h1}>{'REGISTER'}</Text>
             <TextInput
               style={styles.input}
+              onChangeText={(value) => setFullname(value)}
+              placeholder="FULLNAME"
+              placeholderTextColor="#ccc"
+              onFocus={() => keyboardEvent('up')}
+			  onBlur={() => keyboardEvent('down')}
+            />
+            <TextInput
+              style={styles.input}
               onChangeText={(value) => setUsername(value)}
               placeholder="USERNAME"
               placeholderTextColor="#ccc"
               onFocus={() => keyboardEvent('up')}
-              onBlur={() => keyboardEvent('down')}
+			  onBlur={() => keyboardEvent('down')}
             />
             <TextInput
               style={styles.input}
@@ -77,7 +112,7 @@ const RegisterPage = ({ navigation }) => {
               placeholder="PASSWORD"
               placeholderTextColor="#ccc"
               onFocus={() => keyboardEvent('up')}
-              onBlur={() => keyboardEvent('down')}
+			  onBlur={() => keyboardEvent('down')}
             />
 
             <View style={styles.bottomButtonsContainer}>

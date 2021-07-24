@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import {
   Animated,
   Image,
@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native'
+import logoTall from '../assets/logo/logoTall.png'
 import styles from '../components/Style'
 
 //test
@@ -23,6 +24,30 @@ const LoginPage = ({ navigation }) => {
   const [Password, setPassword] = useState('')
   const fadeAnim = useRef(new Animated.Value(1)).current
 
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false)
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true) // or some other action
+		keyboardEvent('up')
+      },
+    )
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false) // or some other action
+		keyboardEvent('down')
+      },
+    )
+
+    return () => {
+      keyboardDidHideListener.remove()
+      keyboardDidShowListener.remove()
+    }
+  }, [])
+
   const keyboardEvent = (e) => {
     if (e == 'up') {
       Animated.timing(fadeAnim, {
@@ -33,7 +58,7 @@ const LoginPage = ({ navigation }) => {
     } else {
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 1000,
+        duration: 600,
         useNativeDriver: true,
       }).start()
     }
@@ -49,7 +74,7 @@ const LoginPage = ({ navigation }) => {
           <Animated.View style={[styles.topContainer, { opacity: fadeAnim }]}>
             <View style={styles.logoContainer}>
               <Image
-                source={require('../assets/mieTall.png')}
+                source={logoTall}
                 style={styles.logo}
               />
               <Text style={styles.title}>{'450F'}</Text>
@@ -69,7 +94,7 @@ const LoginPage = ({ navigation }) => {
               placeholder="USERNAME"
               placeholderTextColor="#bbb"
               onFocus={() => keyboardEvent('up')}
-              onBlur={() => keyboardEvent('down')}
+			  onBlur={() => keyboardEvent('down')}
             />
             <TextInput
               style={styles.input}
@@ -77,7 +102,7 @@ const LoginPage = ({ navigation }) => {
               placeholder="PASSWORD"
               placeholderTextColor="#bbb"
               onFocus={() => keyboardEvent('up')}
-              onBlur={() => keyboardEvent('down')}
+			  onBlur={() => keyboardEvent('down')}
             />
 
             <View style={styles.bottomButtonsContainer}>

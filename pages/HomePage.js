@@ -28,7 +28,7 @@ const left = (navigation) => {
         style={{ alignContent: 'left' }}
         onPress={() => toggleDrawer()}>
         <Image
-          source={require('../assets/icon.png')}
+          source={require('../assets/logo/favicon16.png')}
           style={{
             width: 25,
             height: 25,
@@ -51,7 +51,7 @@ const right = (navigation) => {
         style={{ alignContent: 'left' }}
         onPress={() => openPage(navigation)}>
         <Image
-          source={require('../assets/icon.png')}
+          source={require('../assets/logo/favicon16.png')}
           style={{
             width: 25,
             height: 25,

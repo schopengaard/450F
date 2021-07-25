@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "main": "node_modules/expo/AppEntry.js",
     "scripts": {
         "start": "expo start",
@@ -27,3 +28,32 @@
     },
     "private": true
 }
+=======
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject"
+  },
+  "dependencies": {
+    "react-native-screens": "~3.4.0",
+    "@react-navigation/stack": "^5.14.5",
+    "@react-navigation/drawer": "^5.12.5",
+    "@react-navigation/native": "^5.9.4",
+    "react-native-gesture-handler": "~1.10.2",
+    "expo-splash-screen": "~0.11.2",
+    "expo-status-bar": "~1.0.4",
+    "react-native-animated-splash-screen": "^2.0.5",
+    "@react-native-community/masked-view": "0.1.10",
+    "react-native-reanimated": "~2.2.0",
+    "react-native-safe-area-context": "3.2.0",
+    "expo-font": "~9.2.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0"
+  },
+  "private": true
+}
+>>>>>>> 2983a69330f79fd85c281386872fc8ced76799e9

@@ -4,11 +4,11 @@
         "slug": "450F",
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./assets/mie.png",
+        "icon": "./assets/logo/logo.png",
         "splash": {
-            "image": "./assets/mieTall.png",
+            "image": "./assets/logo/splash.png",
             "resizeMode": "contain",
-            "backgroundColor": "#ffffff"
+            "backgroundColor": "#303030"
         },
         "updates": {
             "fallbackToCacheTimeout": 0
@@ -21,12 +21,12 @@
         },
         "android": {
             "adaptiveIcon": {
-                "foregroundImage": "./assets/mie.png",
-                "backgroundColor": "#FFFFFF"
+                "foregroundImage": "./assets/logo/logo.png",
+                "backgroundColor": "#fff"
             }
         },
         "web": {
-            "favicon": "./assets/mie.png"
+            "favicon": "./assets/logo/favicon16.png"
         }
     }
 }

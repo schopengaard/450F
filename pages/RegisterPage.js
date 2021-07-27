@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Animated,
   Image,
@@ -10,45 +10,74 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Platform
-} from 'react-native'
-import logoTall from '../assets/logo/logoTall.png'
-import styles from '../components/Style'
+  Platform,
+} from 'react-native';
+import logoTall from '../assets/logo/logoTall.png';
+import styles from '../components/Style';
+import { openDatabase } from 'expo-sqlite';
 
-//test
-const submit = (navigation) => {
-  navigation.navigate('LoginPage')
-}
+var db = openDatabase({ name: 'UserDatabase.db' });
 
 const RegisterPage = ({ navigation }) => {
-  const [Fullname, setFullname] = useState('')
-  const [Username, setUsername] = useState('')
-  const [Password, setPassword] = useState('')
-  const fadeAnim = useRef(new Animated.Value(1)).current
+  const [Fullname, setFullname] = useState('');
+  const [Username, setUsername] = useState('');
+  const [Password, setPassword] = useState('');
+  const fadeAnim = useRef(new Animated.Value(1)).current;
 
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false)
+  const submit = () => {
+    if (!Fullname) {
+      alert('Please enter full name');
+      return;
+    }
+    if (!Username) {
+      alert('Please enter user name');
+      return;
+    }
+    if (!Password) {
+      alert('Please enter password');
+      return;
+    }
+
+    db.transaction(function (tx) {
+      tx.executeSql(
+        'INSERT INTO user (username, fullname, password) VALUES (?,?,?)',
+        [Username, Fullname, Password],
+        (tx, results) => {
+          alert(results.rowsAffected);
+          if (results.rowsAffected > 0) {
+            alert('Success');
+            navigation.navigate("LoginPage");
+          } else {
+            alert('Registration Failed');
+          }
+        }
+      );
+    });
+  };
+
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
-        setKeyboardVisible(true)
-		keyboardEvent('up')
-      },
-    )
+        setKeyboardVisible(true);
+        keyboardEvent('up');
+      }
+    );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
-        setKeyboardVisible(false)
-		keyboardEvent('down')
-      },
-    )
+        setKeyboardVisible(false);
+        keyboardEvent('down');
+      }
+    );
 
     return () => {
-      keyboardDidHideListener.remove()
-      keyboardDidShowListener.remove()
-    }
-  }, [])
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
   const keyboardEvent = (e) => {
     if (e == 'up') {
@@ -56,29 +85,23 @@ const RegisterPage = ({ navigation }) => {
         toValue: 0,
         duration: 400,
         useNativeDriver: true,
-      }).start()
+      }).start();
     } else {
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 600,
         useNativeDriver: true,
-      }).start()
+      }).start();
     }
-  }
+  };
 
   return (
-    <KeyboardAvoidingView
-      behavior='height'
-      style={styles.changedContainer}
-    >
+    <KeyboardAvoidingView behavior="height" style={styles.changedContainer}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.mainContainer}>
           <Animated.View style={[styles.topContainer, { opacity: fadeAnim }]}>
             <View style={styles.logoContainer}>
-              <Image
-                source={logoTall}
-                style={styles.logo}
-              />
+              <Image source={logoTall} style={styles.logo} />
               <Text style={styles.title}>{'450F'}</Text>
             </View>
             <Text style={styles.subtitle}>
@@ -96,7 +119,7 @@ const RegisterPage = ({ navigation }) => {
               placeholder="FULLNAME"
               placeholderTextColor="#ccc"
               onFocus={() => keyboardEvent('up')}
-			  onBlur={() => keyboardEvent('down')}
+              onBlur={() => keyboardEvent('down')}
             />
             <TextInput
               style={styles.input}
@@ -104,7 +127,7 @@ const RegisterPage = ({ navigation }) => {
               placeholder="USERNAME"
               placeholderTextColor="#ccc"
               onFocus={() => keyboardEvent('up')}
-			  onBlur={() => keyboardEvent('down')}
+              onBlur={() => keyboardEvent('down')}
             />
             <TextInput
               style={styles.input}
@@ -112,22 +135,20 @@ const RegisterPage = ({ navigation }) => {
               placeholder="PASSWORD"
               placeholderTextColor="#ccc"
               onFocus={() => keyboardEvent('up')}
-			  onBlur={() => keyboardEvent('down')}
+              onBlur={() => keyboardEvent('down')}
             />
 
             <View style={styles.bottomButtonsContainer}>
               <TouchableOpacity
                 style={[styles.button, styles.button1]}
-                onPress={() => navigation.navigate('LoginPage')}
-              >
+                onPress={() => navigation.navigate('LoginPage')}>
                 <Text style={[styles.buttonText, styles.button1Text]}>
                   {'CANCEL'}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, styles.button2]}
-                onPress={() => submit(navigation)}
-              >
+                onPress={() => submit(navigation)}>
                 <Text style={[styles.buttonText, styles.button2Text]}>
                   {'REGISTER'}
                 </Text>
@@ -137,7 +158,7 @@ const RegisterPage = ({ navigation }) => {
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
-  )
-}
+  );
+};
 
-export default RegisterPage
+export default RegisterPage;

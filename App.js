@@ -1,27 +1,50 @@
-import 'react-native-gesture-handler'
+import 'react-native-gesture-handler';
 
-import * as React from 'react'
-import { Button, View, Text } from 'react-native'
-import { useFonts } from 'expo-font'
-import * as SplashScreen from 'expo-splash-screen'
+import * as React from 'react';
+import { Button, View, Text } from 'react-native';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
+import { useEffect } from 'react';
+import { openDatabase } from 'expo-sqlite';
 
-import LoginPage from './pages/LoginPage.js'
-import RegisterPage from './pages/RegisterPage.js'
-import HomePage from './pages/HomePage.js'
-import styles from './components/Style.js'
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const Stack = createStackNavigator()
+import LoginPage from './pages/LoginPage.js';
+import RegisterPage from './pages/RegisterPage.js';
+import HomePage from './pages/HomePage.js';
+import styles from './components/Style.js';
+
+const Stack = createStackNavigator();
+
+var db = openDatabase({ name: 'UserDatabase.db' });
 
 export default function App() {
   const [loaded] = useFonts({
     RobotoMono: require('./assets/fonts/RobotoMono-Regular.ttf'),
-  })
+  });
+
+  useEffect(() => {
+    db.transaction(function (txn) {
+      txn.executeSql(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='user'",
+        [],
+        function (tx, res) {
+          console.log('item:', res.rows.length);
+          if (res.rows.length == 0) {
+            txn.executeSql('DROP TABLE IF EXISTS user');
+            txn.executeSql(
+              'CREATE TABLE IF NOT EXISTS user (username VARCHAR(20) PRIMARY KEY, fullname VARCHAR(20),password VARCHAR(20))'
+            );
+          }
+        }
+      );
+    });
+  }, []);
 
   if (!loaded) {
-    return null
+    return null;
   }
   return (
     <NavigationContainer>
@@ -70,5 +93,5 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
-  )
+  );
 }

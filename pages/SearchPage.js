@@ -18,12 +18,12 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import logoIcon from '../assets/img/logo.png'
 import searchIcon from '../assets/img/searchIcon.png'
 
-const HomePage = () => {
+const SearchPage = () => {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home</Text>
+		<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Search</Text>
     </View>
   )
 }
 
-export default HomePage
+export default SearchPage

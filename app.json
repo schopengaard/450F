@@ -4,9 +4,9 @@
         "slug": "450F",
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./assets/logo/logo.png",
+        "icon": "./assets/img/logo.png",
         "splash": {
-            "image": "./assets/logo/splash.png",
+            "image": "./assets/img/splash.png",
             "resizeMode": "contain",
             "backgroundColor": "#303030"
         },
@@ -21,12 +21,12 @@
         },
         "android": {
             "adaptiveIcon": {
-                "foregroundImage": "./assets/logo/adaptIcon.png",
+                "foregroundImage": "./assets/img/adaptIcon.png",
                 "backgroundColor": "#303030"
             }
         },
         "web": {
-            "favicon": "./assets/logo/favicon16.png"
+            "favicon": "./assets/img/favicon16.png"
         }
     }
 }

@@ -1,63 +1,120 @@
-import 'react-native-gesture-handler';
+import 'react-native-gesture-handler'
 
-import * as React from 'react';
-import { Button, View, Text } from 'react-native';
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
+import * as React from 'react'
+import { Image, Button, View, Text, TouchableOpacity } from 'react-native'
+import { useFonts } from 'expo-font'
+import * as SplashScreen from 'expo-splash-screen'
 
-import { useEffect } from 'react';
-import { openDatabase } from 'expo-sqlite';
+import { NavigationContainer, DrawerActions } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import HomePage from './pages/HomePage.js'
+import SearchPage from './pages/SearchPage.js'
+import LoginPage from './pages/LoginPage.js'
+import RegisterPage from './pages/RegisterPage.js'
+import styles from './components/Style.js'
 
-import LoginPage from './pages/LoginPage.js';
-import RegisterPage from './pages/RegisterPage.js';
-import HomePage from './pages/HomePage.js';
-import styles from './components/Style.js';
+const Stack = createStackNavigator()
+const Drawer = createDrawerNavigator()
 
-const Stack = createStackNavigator();
-
-var db = openDatabase({ name: 'UserDatabase.db' });
+import logoIcon from './assets/img/logo.png'
+import searchIcon from './assets/img/searchIcon.png'
 
 export default function App() {
   const [loaded] = useFonts({
     RobotoMono: require('./assets/fonts/RobotoMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    db.transaction(function (txn) {
-      txn.executeSql(
-        "SELECT name FROM sqlite_master WHERE type='table' AND name='user'",
-        [],
-        function (tx, res) {
-          console.log('item:', res.rows.length);
-          if (res.rows.length == 0) {
-            txn.executeSql('DROP TABLE IF EXISTS user');
-            txn.executeSql(
-              'CREATE TABLE IF NOT EXISTS user (username VARCHAR(20) PRIMARY KEY, fullname VARCHAR(20),password VARCHAR(20))'
-            );
-          }
-        }
-      );
-    });
-  }, []);
+  })
 
   if (!loaded) {
-    return null;
+    return null
   }
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="LoginPage">
+
+  const homeStack = ({navigation}) => {
+    const NavDrawer = (props) => {
+      return (
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
+            <Image
+              source={logoIcon}
+              style={{
+                width: 25,
+                height: 25,
+                marginLeft: 20,
+              }}
+            />
+          </TouchableOpacity>
+        </View>
+      )
+    }
+
+    const SearchIcon = () => {
+      return (
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity onPress={() => navigation.navigate('SearchPage')}>
+            <Image
+              source={searchIcon}
+              style={{
+                width: 25,
+                height: 25,
+                marginRight: 20,
+              }}
+            />
+          </TouchableOpacity>
+        </View>
+      )
+    }
+
+    return (
+      <Stack.Navigator initialRouteName="HomePage">
+        <Stack.Screen
+          name="HomePage"
+          component={HomePage}
+          options={{
+            title: '450F',
+            headerStyle: {
+              height: 70,
+              backgroundColor: '#333',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontFamily: 'RobotoMono',
+              textAlign: 'center',
+            },
+            headerLeft: () => <NavDrawer />,
+            headerRight: () => <SearchIcon />,
+          }}
+        />
+        <Stack.Screen
+          name="SearchPage"
+          component={SearchPage}
+          options={{
+            title: 'SEARCH',
+            headerStyle: {
+              height: 70,
+              backgroundColor: '#333',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontFamily: 'RobotoMono',
+              textAlign: 'center',
+            },
+            headerLeft: () => <NavDrawer />,
+            headerRight: () => <SearchIcon />,
+          }}
+        />
+      </Stack.Navigator>
+    )
+  }
+
+  const accessStack = ({navigation}) => {
+    return (
+      <Stack.Navigator initialRouteName="HomePage">
         <Stack.Screen
           name="LoginPage"
           component={LoginPage}
           options={{
-            title: 'Login Page',
-            headerStyle: {
-              backgroundColor: '#00000000',
-            },
-            headerTintColor: '#00000000',
+            title: 'LOGIN',
             headerShown: false,
           }}
         />
@@ -65,33 +122,43 @@ export default function App() {
           name="RegisterPage"
           component={RegisterPage}
           options={{
-            title: 'Register Page',
-            headerStyle: {
-              backgroundColor: '#f4511e',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="HomePage"
-          component={HomePage}
-          options={{
-            title: 'Home Page',
-            headerStyle: {
-              backgroundColor: '#f4511e',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
+            title: 'REGISTER',
             headerShown: false,
           }}
         />
       </Stack.Navigator>
+    )
+  }
+
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator
+        drawerContentOptions={{
+          activeTintColor: '#e91e63',
+          itemStyle: { marginVertical: 5 },
+        }}
+      >
+        <Drawer.Screen
+          name="LoginPage"
+          options={{ drawerLabel: 'Login' }}
+          component={accessStack}
+        />
+				<Drawer.Screen
+          name="RegisterPage"
+          options={{ drawerLabel: 'Register' }}
+          component={accessStack}
+        />
+				<Drawer.Screen
+          name="HomePage"
+          options={{ drawerLabel: 'Home' }}
+          component={homeStack}
+        />
+				<Drawer.Screen
+          name="SearchPage"
+          options={{ drawerLabel: 'Search' }}
+          component={homeStack}
+        />
+      </Drawer.Navigator>
     </NavigationContainer>
-  );
+  )
 }

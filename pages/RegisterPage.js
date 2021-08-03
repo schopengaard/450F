@@ -98,8 +98,8 @@ const RegisterPage = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView behavior="height" style={styles.changedContainer}>
+      <StatusBarBackground />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <StatusBarBackground />
         <View style={styles.mainContainer}>
           <Animated.View style={[styles.topContainer, { opacity: fadeAnim }]}>
             <View style={styles.logoContainer}>

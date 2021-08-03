@@ -44,7 +44,7 @@ const LoginPage = ({ navigation }) => {
       )
     })
 		*/
-    navigation.navigate('HomePage')
+    navigation.navigate('Home', {screen: 'HomePage'})
   }
 
   const [isKeyboardVisible, setKeyboardVisible] = useState(false)

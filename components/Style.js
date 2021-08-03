@@ -1,11 +1,24 @@
-import { StyleSheet, Platform, Dimensions } from 'react-native'
+import { StyleSheet, Platform, Dimensions, NativeModules } from 'react-native'
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window')
+const { StatusBarManager } = NativeModules
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT
 
 export default StyleSheet.create({
   bold: { fontWeight: 'bold' },
   italic: { fontStyle: 'italic' },
   underline: { textDecorationLine: 'underline' },
+  statusBarBackground: {
+    height: STATUSBAR_HEIGHT,
+    ...Platform.select({
+      ios: {
+        backgroundColor: '#333',
+      },
+      android: {
+        backgroundColor: '#333',
+      },
+    }),
+  },
   changedContainer: {
     flex: 1,
   },

@@ -5,7 +5,7 @@ import { Image, Button, View, Text, TouchableOpacity } from 'react-native'
 import { useFonts } from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen'
 
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer, DrawerActions } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
@@ -30,52 +30,25 @@ export default function App() {
     return null
   }
 
-  const homeStack = ({ navigation }) => {
+  const Auth = ({ navigation }) => {
     return (
-      <Stack.Navigator initialRouteName="HomePage">
-        <Stack.Screen
-          name="HomePage"
-          component={HomePage}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="SearchPage"
-          component={SearchPage}
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack.Navigator>
-    )
-  }
-
-  const accessStack = ({ navigation }) => {
-    return (
-      <Stack.Navigator initialRouteName="HomePage">
+      <Stack.Navigator initialRouteName="LoginPage">
         <Stack.Screen
           name="LoginPage"
           component={LoginPage}
-          options={{
-            title: 'LOGIN',
-            headerShown: false,
-          }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="RegisterPage"
           component={RegisterPage}
-          options={{
-            title: 'REGISTER',
-            headerShown: false,
-          }}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     )
   }
 
-  return (
-    <NavigationContainer>
+  const Home = ({ navigation }) => {
+    return (
       <Drawer.Navigator
         drawerContentOptions={{
           activeTintColor: '#e91e63',
@@ -83,26 +56,38 @@ export default function App() {
         }}
       >
         <Drawer.Screen
-          name="LoginPage"
-          options={{ drawerLabel: 'Login' }}
-          component={accessStack}
-        />
-        <Drawer.Screen
-          name="RegisterPage"
-          options={{ drawerLabel: 'Register' }}
-          component={accessStack}
-        />
-        <Drawer.Screen
           name="HomePage"
+          component={HomePage}
           options={{ drawerLabel: 'Home' }}
-          component={homeStack}
         />
         <Drawer.Screen
           name="SearchPage"
+          component={SearchPage}
           options={{ drawerLabel: 'Search' }}
-          component={homeStack}
         />
       </Drawer.Navigator>
+    )
+  }
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Auth">
+        <Stack.Screen
+          name="LoginPage"
+          component={LoginPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="RegisterPage"
+          component={RegisterPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   )
 }

@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
   Platform,
 } from 'react-native'
+import StatusBarBackground from '../components/StatusBarBackground'
 import logoTall from '../assets/img/logoTall.png'
 import styles from '../components/Style'
 import { openDatabase } from 'expo-sqlite'
@@ -46,11 +47,11 @@ const RegisterPage = ({ navigation }) => {
           alert(results.rowsAffected)
           if (results.rowsAffected > 0) {
             alert('Success')
-            navigation.navigate("LoginPage")
+            navigation.navigate('LoginPage')
           } else {
             alert('Registration Failed')
           }
-        }
+        },
       )
     })
   }
@@ -63,14 +64,14 @@ const RegisterPage = ({ navigation }) => {
       () => {
         setKeyboardVisible(true)
         keyboardEvent('up')
-      }
+      },
     )
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
         setKeyboardVisible(false)
         keyboardEvent('down')
-      }
+      },
     )
 
     return () => {
@@ -98,6 +99,7 @@ const RegisterPage = ({ navigation }) => {
   return (
     <KeyboardAvoidingView behavior="height" style={styles.changedContainer}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <StatusBarBackground />
         <View style={styles.mainContainer}>
           <Animated.View style={[styles.topContainer, { opacity: fadeAnim }]}>
             <View style={styles.logoContainer}>
@@ -141,14 +143,16 @@ const RegisterPage = ({ navigation }) => {
             <View style={styles.bottomButtonsContainer}>
               <TouchableOpacity
                 style={[styles.button, styles.button1]}
-                onPress={() => navigation.navigate('LoginPage')}>
+                onPress={() => navigation.navigate('LoginPage')}
+              >
                 <Text style={[styles.buttonText, styles.button1Text]}>
                   {'CANCEL'}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, styles.button2]}
-                onPress={() => submit(navigation)}>
+                onPress={() => submit(navigation)}
+              >
                 <Text style={[styles.buttonText, styles.button2Text]}>
                   {'REGISTER'}
                 </Text>

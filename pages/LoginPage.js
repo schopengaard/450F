@@ -10,8 +10,9 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   TouchableWithoutFeedback,
-	Platform
+  Platform,
 } from 'react-native'
+import StatusBarBackground from '../components/StatusBarBackground'
 import logoTall from '../assets/img/logoTall.png'
 import styles from '../components/Style'
 import { openDatabase } from 'expo-sqlite'
@@ -43,7 +44,7 @@ const LoginPage = ({ navigation }) => {
       )
     })
 		*/
-		navigation.navigate('HomePage')
+    navigation.navigate('HomePage')
   }
 
   const [isKeyboardVisible, setKeyboardVisible] = useState(false)
@@ -91,6 +92,7 @@ const LoginPage = ({ navigation }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.changedContainer}
     >
+      <StatusBarBackground />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.mainContainer}>
           <Animated.View style={[styles.topContainer, { opacity: fadeAnim }]}>

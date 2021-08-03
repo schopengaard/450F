@@ -5,7 +5,7 @@ import { Image, Button, View, Text, TouchableOpacity } from 'react-native'
 import { useFonts } from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen'
 
-import { NavigationContainer, DrawerActions } from '@react-navigation/native'
+import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
@@ -30,84 +30,28 @@ export default function App() {
     return null
   }
 
-  const homeStack = ({navigation}) => {
-    const NavDrawer = (props) => {
-      return (
-        <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-            <Image
-              source={logoIcon}
-              style={{
-                width: 25,
-                height: 25,
-                marginLeft: 20,
-              }}
-            />
-          </TouchableOpacity>
-        </View>
-      )
-    }
-
-    const SearchIcon = () => {
-      return (
-        <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity onPress={() => navigation.navigate('SearchPage')}>
-            <Image
-              source={searchIcon}
-              style={{
-                width: 25,
-                height: 25,
-                marginRight: 20,
-              }}
-            />
-          </TouchableOpacity>
-        </View>
-      )
-    }
-
+  const homeStack = ({ navigation }) => {
     return (
       <Stack.Navigator initialRouteName="HomePage">
         <Stack.Screen
           name="HomePage"
           component={HomePage}
           options={{
-            title: '450F',
-            headerStyle: {
-              height: 70,
-              backgroundColor: '#333',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontFamily: 'RobotoMono',
-              textAlign: 'center',
-            },
-            headerLeft: () => <NavDrawer />,
-            headerRight: () => <SearchIcon />,
+            headerShown: false,
           }}
         />
         <Stack.Screen
           name="SearchPage"
           component={SearchPage}
           options={{
-            title: 'SEARCH',
-            headerStyle: {
-              height: 70,
-              backgroundColor: '#333',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontFamily: 'RobotoMono',
-              textAlign: 'center',
-            },
-            headerLeft: () => <NavDrawer />,
-            headerRight: () => <SearchIcon />,
+            headerShown: false,
           }}
         />
       </Stack.Navigator>
     )
   }
 
-  const accessStack = ({navigation}) => {
+  const accessStack = ({ navigation }) => {
     return (
       <Stack.Navigator initialRouteName="HomePage">
         <Stack.Screen
@@ -143,17 +87,17 @@ export default function App() {
           options={{ drawerLabel: 'Login' }}
           component={accessStack}
         />
-				<Drawer.Screen
+        <Drawer.Screen
           name="RegisterPage"
           options={{ drawerLabel: 'Register' }}
           component={accessStack}
         />
-				<Drawer.Screen
+        <Drawer.Screen
           name="HomePage"
           options={{ drawerLabel: 'Home' }}
           component={homeStack}
         />
-				<Drawer.Screen
+        <Drawer.Screen
           name="SearchPage"
           options={{ drawerLabel: 'Search' }}
           component={homeStack}

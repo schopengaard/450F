@@ -15,34 +15,15 @@ import NavDrawer from '../components/NavDrawer'
 import Back from '../components/Back'
 import styles from '../components/Style.js'
 import { Col, Row, Grid } from 'react-native-easy-grid'
-import axios from 'axios'
+import BookInfo from '../components/BookInfo'
 
 const SearchPage = () => {
   const [book, setBook] = useState('')
   const [result, setResult] = useState([])
-  const [apiKey, setApiKey] = useState(
-    'AIzaSyBDEEvTwL5QJsGxgZYQQyyDz8qjRr4-24s',
+  const searchResult = BookInfo.data.filter((x) =>
+    x.title.toLowerCase().includes(book.toLowerCase()),
   )
-
-  const handleSearch = () => {
-    axios
-      .get(
-        'https://www.googleapis.com/books/v1/volumes?q=' +
-          book +
-          '&key=' +
-          apiKey +
-          '&maxResults=5',
-      )
-      .then((data) => {
-        setResult(data.data.items)
-      })
-  }
-
-  const list = () => {
-    return result.map((book) => {
-      return <Image source={{ uri: book.volumeInfo.imageLinks.thumbnail }} />
-    })
-  }
+  console.log(searchResult)
 
   return (
     <View style={{ flex: 1 }}>
@@ -83,12 +64,47 @@ const SearchPage = () => {
               styles.button2,
               { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 },
             ]}
-            onPress={handleSearch}
           >
             <Text style={[styles.buttonText, styles.button2Text]}>SEARCH</Text>
           </TouchableOpacity>
         </View>
-        <View>{list()}</View>
+        <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+          {searchResult.map((data, key) => {
+            return (
+              <View key={data.key} style={{ flexDirection: 'row' }}>
+                <Image
+                  source={data.image}
+                  style={{
+                    width: 100,
+                    height: 100,
+                    resizeMode: 'contain',
+                    margin: 10,
+                  }}
+                />
+                <View
+                  style={{
+                    flexShrink: 1,
+                    marginTop: 10,
+                    padding: 10,
+                    paddingLeft: 0,
+                  }}
+                >
+                  <Text style={{ fontSize: 18 }}>{data.title}</Text>
+                  <Text>{'by ' + data.author}</Text>
+                  <Text
+                    style={{
+                      fontStyle: 'italic',
+                      fontSize: 12,
+                      color: '#aaa',
+                    }}
+                  >
+                    {'' + data.genre}
+                  </Text>
+                </View>
+              </View>
+            )
+          })}
+        </View>
       </ScrollView>
     </View>
   )

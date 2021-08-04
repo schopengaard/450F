@@ -174,9 +174,6 @@ export default StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 20,
     padding: 10,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: 'black',
   },
   col: {
     flexGrow: 1,

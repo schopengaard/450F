@@ -12,12 +12,50 @@ import {
 import StatusBarBackground from '../components/StatusBarBackground'
 import NavDrawer from '../components/NavDrawer'
 import Search from '../components/Search'
+import { PieChart } from 'react-native-svg-charts'
 import Constants from 'expo-constants'
 import styles from '../components/Style.js'
 import { Col, Row, Grid } from 'react-native-easy-grid'
 import BookInfo from '../components/BookInfo'
 
 const HomePage = () => {
+	// dummy data, to be replaced with new json data
+  const pieData = [
+    {
+      key: 1,
+      amount: 50,
+      svg: { fill: '#600080' },
+    },
+    {
+      key: 2,
+      amount: 50,
+      svg: { fill: '#9900cc' },
+    },
+    {
+      key: 3,
+      amount: 40,
+      svg: { fill: '#c61aff' },
+    },
+    {
+      key: 4,
+      amount: 95,
+      svg: { fill: '#d966ff' },
+    },
+    {
+      key: 5,
+      amount: 35,
+      svg: { fill: '#ecb3ff' },
+    },
+  ]
+
+  let result = {}
+
+  BookInfo.data.forEach((elem) => {
+    result[elem.genre] = (result[elem.genre] || 0) + 1
+  })
+
+	console.log(result);
+
   return (
     <View style={{ flex: 1 }}>
       <StatusBarBackground />
@@ -36,12 +74,53 @@ const HomePage = () => {
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <Text style={{ padding: 20, fontFamily: 'RobotoMono', fontSize: 20 }}>
-          YOUR FAVOURITES:
+          YOUR READING INSIGHTS:
         </Text>
+        <Grid style={styles.grid}>
+          <Col>
+            <PieChart
+              width={100}
+              height={100}
+              valueAccessor={({ item }) => item.amount}
+              data={pieData}
+              spacing={0}
+              outerRadius={'95%'}
+              style={{ height: 100 }}
+            ></PieChart>
+          </Col>
+          <Col>
+            {BookInfo.data.map((data, key) => {
+              return (
+                <View key={data.key} style={{ flexDirection: 'row' }}>
+                  <View
+                    style={{
+                      flexShrink: 1,
+                      marginTop: 10,
+                      padding: 10,
+                      paddingLeft: 0,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontStyle: 'italic',
+                        fontSize: 12,
+                        color: '#aaa',
+                      }}
+                    >
+                      {'' + data.genre}
+                    </Text>
+                  </View>
+                </View>
+              )
+            })}
+            <Text style={styles.col}></Text>
+          </Col>
+        </Grid>
+
         <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
-          {BookInfo.data.map((data, index) => {
+          {BookInfo.data.map((data, key) => {
             return (
-              <View style={{ flexDirection: 'row' }}>
+              <View key={data.key} style={{ flexDirection: 'row' }}>
                 <Image
                   source={data.image}
                   style={{
@@ -56,12 +135,16 @@ const HomePage = () => {
                     flexShrink: 1,
                     marginTop: 10,
                     padding: 10,
-										paddingLeft: 0
+                    paddingLeft: 0,
                   }}
                 >
                   <Text style={{ fontSize: 18 }}>{data.title}</Text>
                   <Text>{'by ' + data.author}</Text>
-									<Text style={{fontStyle: 'italic', fontSize: 12, color: '#aaa'}}>{'' + data.genre}</Text>
+                  <Text
+                    style={{ fontStyle: 'italic', fontSize: 12, color: '#aaa' }}
+                  >
+                    {'' + data.genre}
+                  </Text>
                 </View>
               </View>
             )

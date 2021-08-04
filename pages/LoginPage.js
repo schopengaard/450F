@@ -30,15 +30,14 @@ const LoginPage = ({ navigation }) => {
         'SELECT count(username) FROM user where username=? and password=?',
         [Username, Password],
         (tx, results) => {
-          //alert(results.rows[0]['count(username)'])
+          //alert(JSON.stringify(results.rows));
           if (results.rows[0]['count(username)'] == 1) {
             navigation.navigate('HomePage');
           } else {
             alert('Invalid username or password');
           }
-
           //alert(typeof(results.rows[0]))
-          //alert(results.rows.length)
+          //alert(results.rows.length);
         }
       );
     });
@@ -68,7 +67,7 @@ const LoginPage = ({ navigation }) => {
         "SELECT name FROM sqlite_master WHERE type='table' AND name='user'",
         [],
         function (tx, res) {
-          if (res.rows.length != 0) {
+          if (res.rows.length == 0) {
             tx.executeSql('DROP TABLE IF EXISTS user');
             tx.executeSql(
               'CREATE TABLE IF NOT EXISTS user (username VARCHAR(20) PRIMARY KEY, fullname VARCHAR(20),password VARCHAR(20))'

@@ -70,8 +70,7 @@ const BookInfo = {
       author: 'Barack Obama, Bruce Springsteen',
       genre: 'Non-fiction',
     },
-  ],
-  key: 1,
+  ]
 }
 
 export default BookInfo

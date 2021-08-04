@@ -44,12 +44,12 @@ const RegisterPage = ({ navigation }) => {
         'INSERT INTO user (username, password, fullname) VALUES (?,?,?)',
         [Username, Password, Fullname],
         (tx, results) => {
-          alert(results.rowsAffected)
+          //alert(results.rowsAffected);
           if (results.rowsAffected > 0) {
-            alert('Success')
-            navigation.navigate('LoginPage')
+            alert('Success');
+            navigation.navigate('LoginPage');
           } else {
-            alert('Registration Failed')
+            alert('Registration Failed');
           }
         },
       )

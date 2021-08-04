@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
   Button,
   View,
@@ -8,18 +8,18 @@ import {
   ScrollView,
   Image,
   StyleSheet,
-} from 'react-native'
-import StatusBarBackground from '../components/StatusBarBackground'
-import NavDrawer from '../components/NavDrawer'
-import Search from '../components/Search'
-import { PieChart } from 'react-native-svg-charts'
-import Constants from 'expo-constants'
-import styles from '../components/Style.js'
-import { Col, Row, Grid } from 'react-native-easy-grid'
-import BookInfo from '../components/BookInfo'
+} from 'react-native';
+import StatusBarBackground from '../components/StatusBarBackground';
+import NavDrawer from '../components/NavDrawer';
+import Search from '../components/Search';
+import { PieChart } from 'react-native-svg-charts';
+import Constants from 'expo-constants';
+import styles from '../components/Style.js';
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import BookInfo from '../components/BookInfo';
 
 const HomePage = () => {
-	// dummy data, to be replaced with new json data
+  // dummy data, to be replaced with new json data
   const pieData = [
     {
       key: 1,
@@ -46,15 +46,25 @@ const HomePage = () => {
       amount: 35,
       svg: { fill: '#ecb3ff' },
     },
-  ]
+  ];
 
-  let result = {}
+  let result = [
+    { key: 'Historical Fiction', amount: 0, svg: { fill: '#0c62ed' } },
+    { key: 'Non-fiction', amount: 0, svg: { fill: '#ed0c6e' } },
+  ];
 
   BookInfo.data.forEach((elem) => {
-    result[elem.genre] = (result[elem.genre] || 0) + 1
-  })
+    switch (elem.genre) {
+      case 'Historical Fiction':
+        result[0]['amount'] += 1;
+        break;
+      case 'Non-fiction':
+        result[1]['amount'] += 1;
+        break;
+    }
+  });
 
-	console.log(result);
+  alert(JSON.stringify(result));
 
   return (
     <View style={{ flex: 1 }}>
@@ -66,8 +76,7 @@ const HomePage = () => {
           justifyContent: 'space-between',
           height: 50,
           backgroundColor: '#212121',
-        }}
-      >
+        }}>
         <NavDrawer />
         <Text style={{ color: 'white', fontSize: 18 }}>450F</Text>
         <Search />
@@ -82,14 +91,13 @@ const HomePage = () => {
               width={100}
               height={100}
               valueAccessor={({ item }) => item.amount}
-              data={pieData}
+              data={result}
               spacing={0}
               outerRadius={'95%'}
-              style={{ height: 100 }}
-            ></PieChart>
+              style={{ height: 100 }}></PieChart>
           </Col>
           <Col>
-            {BookInfo.data.map((data, key) => {
+            {result.map((data, key) => {
               return (
                 <View key={data.key} style={{ flexDirection: 'row' }}>
                   <View
@@ -98,20 +106,28 @@ const HomePage = () => {
                       marginTop: 10,
                       padding: 10,
                       paddingLeft: 0,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontStyle: 'italic',
-                        fontSize: 12,
-                        color: '#aaa',
-                      }}
-                    >
-                      {'' + data.genre}
-                    </Text>
+                    }}>
+                    <View>
+                      <Text
+                        style={{
+                          fontStyle: 'italic',
+                          fontSize: 12,
+                          color: '#aaa',
+                        }}>
+                        {'' + data.key}
+                      </Text>
+                      <Text
+                        style={{
+                          fontStyle: 'italic',
+                          fontSize: 12,
+                          color: '#aaa',
+                        }}>
+                        {'' + data.amount}
+                      </Text>
+                    </View>
                   </View>
                 </View>
-              )
+              );
             })}
             <Text style={styles.col}></Text>
           </Col>
@@ -136,23 +152,25 @@ const HomePage = () => {
                     marginTop: 10,
                     padding: 10,
                     paddingLeft: 0,
-                  }}
-                >
+                  }}>
                   <Text style={{ fontSize: 18 }}>{data.title}</Text>
                   <Text>{'by ' + data.author}</Text>
                   <Text
-                    style={{ fontStyle: 'italic', fontSize: 12, color: '#aaa' }}
-                  >
+                    style={{
+                      fontStyle: 'italic',
+                      fontSize: 12,
+                      color: '#aaa',
+                    }}>
                     {'' + data.genre}
                   </Text>
                 </View>
               </View>
-            )
+            );
           })}
         </View>
       </ScrollView>
     </View>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

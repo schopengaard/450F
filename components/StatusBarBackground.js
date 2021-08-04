@@ -11,4 +11,4 @@ class StatusBarBackground extends Component {
   }
 }
 
-module.exports = StatusBarBackground
+export default StatusBarBackground

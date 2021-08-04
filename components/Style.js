@@ -1,21 +1,25 @@
-import { StyleSheet, Platform, Dimensions, NativeModules } from 'react-native'
+import {
+  StyleSheet,
+  Platform,
+  Dimensions,
+  NativeModules,
+  StatusBar,
+} from 'react-native'
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window')
-const { StatusBarManager } = NativeModules
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT
 
 export default StyleSheet.create({
   bold: { fontWeight: 'bold' },
   italic: { fontStyle: 'italic' },
   underline: { textDecorationLine: 'underline' },
   statusBarBackground: {
-    height: STATUSBAR_HEIGHT,
+    height: StatusBar.currentHeight,
     ...Platform.select({
       ios: {
         backgroundColor: '#333',
       },
       android: {
-        backgroundColor: '#333',
+        backgroundColor: '#aaa',
       },
     }),
   },
@@ -140,5 +144,60 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     width: windowWidth * 0.7,
     alignSelf: 'center',
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingTop: StatusBar.currentHeight,
+  },
+  scrollView: {
+    justifyContent: 'center',
+  },
+  card: {
+    backgroundColor: '#ffffff',
+    margin: 30,
+    padding: 20,
+    borderRadius: 10,
+    shadowColor: '#d49966',
+    shadowOffset: {
+      width: 0,
+      height: 7,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 29,
+    elevation: 5,
+  },
+  grid: {
+    flex: 1,
+    flexDirection: 'row',
+    marginVertical: 10,
+    marginHorizontal: 20,
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: 'black',
+  },
+  col: {
+    flexGrow: 1,
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  legend: {
+    fontSize: 16,
+    textAlign: 'center',
+    paddingBottom: 2,
+    marginTop: 5,
+    backgroundColor: '#edc0a1',
+    borderRadius: 10,
+    color: 'white',
+    overflow: 'hidden',
+  },
+  searchInput: {
+    margin: 0,
+    height: 40,
+    width: windowWidth * 0.5,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
   },
 })

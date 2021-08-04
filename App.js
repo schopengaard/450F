@@ -4,6 +4,7 @@ import * as React from 'react'
 import { Image, Button, View, Text, TouchableOpacity } from 'react-native'
 import { useFonts } from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen'
+import * as FileSystem from 'expo-file-system'
 
 import { NavigationContainer, DrawerActions } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'

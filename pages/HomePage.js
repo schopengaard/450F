@@ -19,38 +19,40 @@ import { Col, Row, Grid } from 'react-native-easy-grid'
 import BookInfo from '../components/BookInfo'
 
 const HomePage = () => {
-  let result = [
-    {
-      key: 'Historical Fiction',
-      amount: 0,
-      svg: { fill: '#0c62ed' },
-      arc: { cornerRadius: 3 },
-    },
-    {
-      key: 'Horror Fiction',
-      amount: 0,
-      svg: { fill: '#0c6e5f' },
-      arc: { cornerRadius: 3 },
-    },
-    {
-      key: 'Non-fiction',
-      amount: 0,
-      svg: { fill: '#ed0c6e' },
-      arc: { cornerRadius: 3 },
-    },
-  ]
+  let result = []
 
   BookInfo.data.forEach((elem) => {
-    switch (elem.genre) {
-      case 'Historical Fiction':
-        result[0]['amount'] += 1
-        break
-      case 'Horror Fiction':
-        result[1]['amount'] += 1
-        break
-      case 'Non-fiction':
-        result[2]['amount'] += 1
-        break
+    var r = Math.floor(Math.random() * 150) + 100
+    var g = Math.floor(Math.random() * 50) + 50
+    var b = Math.floor(Math.random() * 50) + 50
+    if (result.length == 0) {
+      result.push({
+        key: elem.genre,
+        amount: 0,
+        svg: { fill: 'rgb(' + r + ',' + g + ',' + b + ', 0.5)' },
+        arc: { cornerRadius: 3 },
+      })
+    } else {
+      var check = false
+      for (var i = 0; i < result.length; i++) {
+        if (elem.genre == result[i]['key']) {
+          check = true
+        }
+      }
+      if (check != true) {
+        result.push({
+          key: elem.genre,
+          amount: 0,
+          svg: { fill: 'rgb(' + r + ',' + g + ',' + b + ', 0.5)' },
+          arc: { cornerRadius: 3 },
+        })
+      }
+    }
+
+    for (var l = 0; l < result.length; l++) {
+      if (elem.genre == result[l]['key']) {
+        result[l]['amount'] += 1
+      }
     }
   })
 

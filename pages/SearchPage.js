@@ -20,8 +20,11 @@ import BookInfo from '../components/BookInfo'
 const SearchPage = () => {
   const [book, setBook] = useState('')
   const [result, setResult] = useState([])
-  const searchResult = BookInfo.data.filter((x) =>
-    x.title.toLowerCase().includes(book.toLowerCase()),
+  const searchResult = BookInfo.data.filter(
+    (x) =>
+      x.title.toLowerCase().includes(book.toLowerCase()) ||
+      x.author.toLowerCase().includes(book.toLowerCase()) ||
+      x.genre.toLowerCase().includes(book.toLowerCase()),
   )
   console.log(searchResult)
 

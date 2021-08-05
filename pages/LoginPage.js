@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Animated,
   Image,
@@ -11,18 +11,18 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Platform,
-} from 'react-native'
-import StatusBarBackground from '../components/StatusBarBackground'
-import logoTall from '../assets/img/logoTall.png'
-import styles from '../components/Style'
-import { openDatabase } from 'expo-sqlite'
+} from 'react-native';
+import StatusBarBackground from '../components/StatusBarBackground';
+import logoTall from '../assets/img/logoTall.png';
+import styles from '../components/Style';
+import { openDatabase } from 'expo-sqlite';
 
-var db = openDatabase({ name: 'UserDatabase.db' })
+var db = openDatabase({ name: 'UserDatabase.db' });
 
 const LoginPage = ({ navigation }) => {
-  const [Username, setUsername] = useState('')
-  const [Password, setPassword] = useState('')
-  const fadeAnim = useRef(new Animated.Value(1)).current
+  const [Username, setUsername] = useState('');
+  const [Password, setPassword] = useState('');
+  const fadeAnim = useRef(new Animated.Value(1)).current;
 
   const verfication = (navigation) => {
     db.transaction((tx) => {
@@ -30,37 +30,34 @@ const LoginPage = ({ navigation }) => {
         'SELECT count(username) FROM user where username=? and password=?',
         [Username, Password],
         (tx, results) => {
-          //alert(JSON.stringify(results.rows));
+          alert(JSON.stringify(results.rows));
           if (results.rows[0]['count(username)'] == 1) {
-            navigation.navigate('HomePage')
+            navigation.navigate('HomePage');
           } else {
-            alert('Invalid username or password')
+            alert('Invalid username or password');
           }
-          //alert(typeof(results.rows[0]))
-          //alert(results.rows.length);
-        },
-      )
-    })
-    navigation.navigate('Home', { screen: 'HomePage' })
-  }
+        }
+      );
+    });
+  };
 
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false)
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
-        setKeyboardVisible(true)
-        keyboardEvent('up')
-      },
-    )
+        setKeyboardVisible(true);
+        keyboardEvent('up');
+      }
+    );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
-        setKeyboardVisible(false)
-        keyboardEvent('down')
-      },
-    )
+        setKeyboardVisible(false);
+        keyboardEvent('down');
+      }
+    );
 
     db.transaction(function (tx) {
       tx.executeSql(
@@ -68,22 +65,22 @@ const LoginPage = ({ navigation }) => {
         [],
         function (tx, res) {
           if (res.rows.length == 0) {
-            tx.executeSql('DROP TABLE IF EXISTS user')
+            tx.executeSql('DROP TABLE IF EXISTS user');
             tx.executeSql(
-              'CREATE TABLE IF NOT EXISTS user (username VARCHAR(20) PRIMARY KEY, fullname VARCHAR(20),password VARCHAR(20))',
-            )
+              'CREATE TABLE IF NOT EXISTS user (username VARCHAR(20) PRIMARY KEY, fullname VARCHAR(20),password VARCHAR(20))'
+            );
           }
-        },
-      )
-    })
+        }
+      );
+    });
 
-    db.transaction(function (tx) {})
+    db.transaction(function (tx) {});
 
     return () => {
-      keyboardDidHideListener.remove()
-      keyboardDidShowListener.remove()
-    }
-  })
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  });
 
   const keyboardEvent = (e) => {
     if (e == 'up') {
@@ -91,21 +88,20 @@ const LoginPage = ({ navigation }) => {
         toValue: 0,
         duration: 400,
         useNativeDriver: true,
-      }).start()
+      }).start();
     } else {
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 600,
         useNativeDriver: true,
-      }).start()
+      }).start();
     }
-  }
+  };
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.changedContainer}
-    >
+      style={styles.changedContainer}>
       <StatusBarBackground />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.mainContainer}>
@@ -143,16 +139,14 @@ const LoginPage = ({ navigation }) => {
             <View style={styles.bottomButtonsContainer}>
               <TouchableOpacity
                 style={[styles.button, styles.button1]}
-                onPress={() => navigation.navigate('RegisterPage')}
-              >
+                onPress={() => navigation.navigate('RegisterPage')}>
                 <Text style={[styles.buttonText, styles.button1Text]}>
                   {'REGISTER'}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, styles.button2]}
-                onPress={() => verfication(navigation)}
-              >
+                onPress={() => verfication(navigation)}>
                 <Text style={[styles.buttonText, styles.button2Text]}>
                   {'LOGIN'}
                 </Text>
@@ -162,7 +156,7 @@ const LoginPage = ({ navigation }) => {
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

@@ -17,7 +17,7 @@ import logoTall from '../assets/img/logoTall.png';
 import styles from '../components/Style';
 import { openDatabase } from 'expo-sqlite';
 
-var db = openDatabase({ name: 'UserDatabase.db' });
+var db = openDatabase({ name: 'user.db' });
 
 const LoginPage = ({ navigation }) => {
   const [Username, setUsername] = useState('');
@@ -27,12 +27,12 @@ const LoginPage = ({ navigation }) => {
   const verfication = (navigation) => {
     db.transaction((tx) => {
       tx.executeSql(
-        'SELECT count(username) FROM user where username=? and password=?',
+        'SELECT username FROM user where username=? and password=?',
         [Username, Password],
         (tx, results) => {
-          alert(JSON.stringify(results.rows));
-          if (results.rows[0]['count(username)'] == 1) {
-            navigation.navigate('HomePage');
+          alert(JSON.stringify(results.rows[0]));
+          if (results.rows[0]['username'] == Username) {
+            navigation.navigate('Home', { screen: 'HomePage' });
           } else {
             alert('Invalid username or password');
           }
@@ -65,10 +65,11 @@ const LoginPage = ({ navigation }) => {
         [],
         function (tx, res) {
           if (res.rows.length == 0) {
-            tx.executeSql('DROP TABLE IF EXISTS user');
-            tx.executeSql(
-              'CREATE TABLE IF NOT EXISTS user (username VARCHAR(20) PRIMARY KEY, fullname VARCHAR(20),password VARCHAR(20))'
-            );
+            tx.executeSql('DROP TABLE IF EXISTS user', [], function (tx) {
+              tx.executeSql(
+                'CREATE TABLE IF NOT EXISTS user (username VARCHAR(20) PRIMARY KEY, fullname VARCHAR(20),password VARCHAR(20))'
+              );
+            });
           }
         }
       );

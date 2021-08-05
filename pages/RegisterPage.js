@@ -17,7 +17,7 @@ import logoTall from '../assets/img/logoTall.png';
 import styles from '../components/Style';
 import { openDatabase } from 'expo-sqlite';
 
-var db = openDatabase({ name: 'UserDatabase.db' });
+var db = openDatabase({ name: 'user.db' });
 
 const RegisterPage = ({ navigation }) => {
   const [Fullname, setFullname] = useState('');
@@ -43,10 +43,10 @@ const RegisterPage = ({ navigation }) => {
       tx.executeSql(
         'INSERT INTO user (username, password, fullname) VALUES (?,?,?)',
         [Username, Password, Fullname],
-        (tx, results) => {
-          alert(results.rowsAffected);
+        function(tx, results){
+          //alert(results.rowsAffected);
           if (results.rowsAffected > 0) {
-            alert('Success');
+            //alert('Success');
             navigation.navigate('LoginPage', { screen: 'LoginPage' });
           } else {
             alert('Registration Failed');

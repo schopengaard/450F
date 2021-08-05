@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
   Button,
   View,
@@ -9,24 +9,21 @@ import {
   ScrollView,
   Image,
   StyleSheet,
-} from 'react-native'
-import StatusBarBackground from '../components/StatusBarBackground'
-import NavDrawer from '../components/NavDrawer'
-import Back from '../components/Back'
-import styles from '../components/Style.js'
-import { Col, Row, Grid } from 'react-native-easy-grid'
-import BookInfo from '../components/BookInfo'
+} from 'react-native';
+import StatusBarBackground from '../components/StatusBarBackground';
+import NavDrawer from '../components/NavDrawer';
+import Back from '../components/Back';
+import styles from '../components/Style.js';
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import BookInfo from '../components/BookInfo';
 
 const SearchPage = () => {
-  const [book, setBook] = useState('')
-  const [result, setResult] = useState([])
-  const searchResult = BookInfo.data.filter(
-    (x) =>
-      x.title.toLowerCase().includes(book.toLowerCase()) ||
-      x.author.toLowerCase().includes(book.toLowerCase()) ||
-      x.genre.toLowerCase().includes(book.toLowerCase()),
-  )
-  console.log(searchResult)
+  const [book, setBook] = useState('');
+  const [result, setResult] = useState([]);
+  const searchResult = BookInfo.filter((x) =>
+    x.title.toLowerCase().includes(book.toLowerCase())
+  );
+  console.log(searchResult);
 
   return (
     <View style={{ flex: 1 }}>
@@ -38,8 +35,7 @@ const SearchPage = () => {
           justifyContent: 'space-between',
           height: 50,
           backgroundColor: '#212121',
-        }}
-      >
+        }}>
         <NavDrawer />
         <Text style={{ color: 'white', fontSize: 18 }}>450F</Text>
         <Back />
@@ -53,8 +49,7 @@ const SearchPage = () => {
             flexDirection: 'row',
             margin: 5,
             justifyContent: 'center',
-          }}
-        >
+          }}>
           <TextInput
             style={[styles.input, styles.searchInput]}
             placeholder="search"
@@ -66,8 +61,7 @@ const SearchPage = () => {
               styles.button,
               styles.button2,
               { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 },
-            ]}
-          >
+            ]}>
             <Text style={[styles.buttonText, styles.button2Text]}>SEARCH</Text>
           </TouchableOpacity>
         </View>
@@ -90,8 +84,7 @@ const SearchPage = () => {
                     marginTop: 10,
                     padding: 10,
                     paddingLeft: 0,
-                  }}
-                >
+                  }}>
                   <Text style={{ fontSize: 18 }}>{data.title}</Text>
                   <Text>{'by ' + data.author}</Text>
                   <Text
@@ -99,18 +92,17 @@ const SearchPage = () => {
                       fontStyle: 'italic',
                       fontSize: 12,
                       color: '#aaa',
-                    }}
-                  >
+                    }}>
                     {'' + data.genre}
                   </Text>
                 </View>
               </View>
-            )
+            );
           })}
         </View>
       </ScrollView>
     </View>
-  )
-}
+  );
+};
 
-export default SearchPage
+export default SearchPage;

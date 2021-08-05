@@ -19,16 +19,16 @@ import styles from './components/Style.js';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-import logoIcon from './assets/img/logo.png'
-import searchIcon from './assets/img/searchIcon.png'
+import logoIcon from './assets/img/logo.png';
+import searchIcon from './assets/img/searchIcon.png';
 
 export default function App() {
   const [loaded] = useFonts({
     RobotoMono: require('./assets/fonts/RobotoMono-Regular.ttf'),
-  })
+  });
 
   if (!loaded) {
-    return null
+    return null;
   }
 
   const Auth = ({ navigation }) => {
@@ -45,8 +45,8 @@ export default function App() {
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
-    )
-  }
+    );
+  };
 
   const Home = ({ navigation }) => {
     return (
@@ -54,8 +54,7 @@ export default function App() {
         drawerContentOptions={{
           activeTintColor: '#e91e63',
           itemStyle: { marginVertical: 5 },
-        }}
-      >
+        }}>
         <Drawer.Screen
           name="HomePage"
           component={HomePage}
@@ -67,8 +66,8 @@ export default function App() {
           options={{ drawerLabel: 'Search' }}
         />
       </Drawer.Navigator>
-    )
-  }
+    );
+  };
 
   return (
     <NavigationContainer>
@@ -90,5 +89,5 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
-  )
+  );
 }

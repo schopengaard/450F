@@ -19,6 +19,7 @@
         "expo-font": "~9.2.1",
         "expo-splash-screen": "~0.11.2",
         "expo-sqlite": "~9.2.1",
+        "firebase": "^8.8.1",
         "react": "16.13.1",
         "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
         "react-native-easy-grid": "^0.2.2",

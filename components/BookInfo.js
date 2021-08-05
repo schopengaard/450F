@@ -1,4 +1,4 @@
-const BookInfo = {
+var BookInfo = {
   data: [
     {
       key: 1,
@@ -6,6 +6,7 @@ const BookInfo = {
       title: 'The Song of Achilles',
       author: 'Madeline Miller',
       genre: 'Historical Fiction',
+      fav: 1,
     },
     {
       key: 2,
@@ -13,6 +14,7 @@ const BookInfo = {
       title: 'The Nightingale',
       author: 'Kristin Hannah',
       genre: 'Historical Fiction',
+      fav: 0,
     },
     {
       key: 3,
@@ -20,6 +22,7 @@ const BookInfo = {
       title: 'Survive the Night',
       author: 'Riley Sager',
       genre: 'Horror Fiction',
+      fav: 1,
     },
     {
       key: 4,
@@ -27,6 +30,7 @@ const BookInfo = {
       title: 'The Intelligent Investor',
       author: 'Benjamin Graham',
       genre: 'Non-fiction',
+      fav: 0,
     },
     {
       key: 5,
@@ -34,6 +38,7 @@ const BookInfo = {
       title: 'The 7 Habits of Highly Effective People',
       author: 'Stephen R. Covey',
       genre: 'Non-fiction',
+      fav: 1,
     },
     {
       key: 6,
@@ -41,6 +46,7 @@ const BookInfo = {
       title: 'Big Magic: How to Live a Creative Life, and Let Go of Your Fear',
       author: 'Elizabeth Gilbert',
       genre: 'Non-fiction',
+      fav: 1,
     },
     {
       key: 7,
@@ -48,6 +54,7 @@ const BookInfo = {
       title: 'The Body Keeps the Score',
       author: 'Bessel Van Der Kolk, M.D.',
       genre: 'Non-fiction',
+      fav: 0,
     },
     {
       key: 8,
@@ -55,6 +62,7 @@ const BookInfo = {
       title: 'When the Body Says No',
       author: 'Gabor Maté M.D.',
       genre: 'Non-fiction',
+      fav: 0,
     },
     {
       key: 9,
@@ -62,6 +70,7 @@ const BookInfo = {
       title: 'The Untethered Soul',
       author: 'Michael A. Singer',
       genre: 'Non-fiction',
+      fav: 0,
     },
     {
       key: 10,
@@ -69,8 +78,9 @@ const BookInfo = {
       title: 'Brave New World',
       author: 'Aldous Huxley',
       genre: 'Dystopian Fiction',
+      fav: 1,
     },
-  ]
+  ],
 }
 
 export default BookInfo

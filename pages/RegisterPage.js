@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Animated,
   Image,
@@ -11,32 +11,32 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Platform,
-} from 'react-native'
-import StatusBarBackground from '../components/StatusBarBackground'
-import logoTall from '../assets/img/logoTall.png'
-import styles from '../components/Style'
-import { openDatabase } from 'expo-sqlite'
+} from 'react-native';
+import StatusBarBackground from '../components/StatusBarBackground';
+import logoTall from '../assets/img/logoTall.png';
+import styles from '../components/Style';
+import { openDatabase } from 'expo-sqlite';
 
-var db = openDatabase({ name: 'UserDatabase.db' })
+var db = openDatabase({ name: 'UserDatabase.db' });
 
 const RegisterPage = ({ navigation }) => {
-  const [Fullname, setFullname] = useState('')
-  const [Username, setUsername] = useState('')
-  const [Password, setPassword] = useState('')
-  const fadeAnim = useRef(new Animated.Value(1)).current
+  const [Fullname, setFullname] = useState('');
+  const [Username, setUsername] = useState('');
+  const [Password, setPassword] = useState('');
+  const fadeAnim = useRef(new Animated.Value(1)).current;
 
   const submit = () => {
     if (!Fullname) {
-      alert('Please enter Full Name')
-      return
+      alert('Please enter Full Name');
+      return;
     }
     if (!Username) {
-      alert('Please enter Username')
-      return
+      alert('Please enter Username');
+      return;
     }
     if (!Password) {
-      alert('Please enter Password')
-      return
+      alert('Please enter Password');
+      return;
     }
 
     db.transaction(function (tx) {
@@ -44,41 +44,41 @@ const RegisterPage = ({ navigation }) => {
         'INSERT INTO user (username, password, fullname) VALUES (?,?,?)',
         [Username, Password, Fullname],
         (tx, results) => {
-          //alert(results.rowsAffected);
+          alert(results.rowsAffected);
           if (results.rowsAffected > 0) {
             alert('Success');
-            navigation.navigate('LoginPage');
+            navigation.navigate('LoginPage', { screen: 'LoginPage' });
           } else {
             alert('Registration Failed');
           }
-        },
-      )
-    })
-  }
+        }
+      );
+    });
+  };
 
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false)
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
-        setKeyboardVisible(true)
-        keyboardEvent('up')
-      },
-    )
+        setKeyboardVisible(true);
+        keyboardEvent('up');
+      }
+    );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
-        setKeyboardVisible(false)
-        keyboardEvent('down')
-      },
-    )
+        setKeyboardVisible(false);
+        keyboardEvent('down');
+      }
+    );
 
     return () => {
-      keyboardDidHideListener.remove()
-      keyboardDidShowListener.remove()
-    }
-  }, [])
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
   const keyboardEvent = (e) => {
     if (e == 'up') {
@@ -86,15 +86,15 @@ const RegisterPage = ({ navigation }) => {
         toValue: 0,
         duration: 400,
         useNativeDriver: true,
-      }).start()
+      }).start();
     } else {
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 600,
         useNativeDriver: true,
-      }).start()
+      }).start();
     }
-  }
+  };
 
   return (
     <KeyboardAvoidingView behavior="height" style={styles.changedContainer}>
@@ -143,16 +143,14 @@ const RegisterPage = ({ navigation }) => {
             <View style={styles.bottomButtonsContainer}>
               <TouchableOpacity
                 style={[styles.button, styles.button1]}
-                onPress={() => navigation.navigate('LoginPage')}
-              >
+                onPress={() => navigation.navigate('LoginPage')}>
                 <Text style={[styles.buttonText, styles.button1Text]}>
                   {'CANCEL'}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, styles.button2]}
-                onPress={() => submit(navigation)}
-              >
+                onPress={() => submit(navigation)}>
                 <Text style={[styles.buttonText, styles.button2Text]}>
                   {'REGISTER'}
                 </Text>
@@ -162,7 +160,7 @@ const RegisterPage = ({ navigation }) => {
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
-  )
-}
+  );
+};
 
-export default RegisterPage
+export default RegisterPage;

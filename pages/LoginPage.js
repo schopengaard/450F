@@ -25,6 +25,7 @@ const LoginPage = ({ navigation }) => {
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
   const verfication = (navigation) => {
+		navigation.navigate('Home', { screen: 'HomePage' });
     db.transaction((tx) => {
       tx.executeSql(
         'SELECT username FROM user where username=? and password=?',
